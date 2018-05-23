@@ -1,0 +1,11 @@
+Body {
+    background-color: #2D2D2D;
+}
+
+.card {
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-align-content: center;
+    align-content: center;
+}
