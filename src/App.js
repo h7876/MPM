@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 import Auth from './component/Auth/Auth';
-// import Attendance from './component/Attendance/Attendance';
-// import Competencies from './component/Competencies/Competencies';
+import Attendance from './component/Attendance/Attendance';
+import Competencies from './component/Competencies/Competencies';
 import Dashboard from './component/Dashboard/Dashboard';
-// import Journal from './component/Journal/Journal';
-// import Performance from './component/Performance/Performance';
+import Journal from './component/Journal/Journal';
+import Performance from './component/Performance/Performance';
 import {HashRouter, Route, Switch} from 'react-router-dom';
 
 class App extends Component {
@@ -16,6 +16,12 @@ class App extends Component {
           <Switch>
             <Route path= '/' component = {Auth} exact/>
             <Route path= '/dashboard' component = {Dashboard} />
+            <Route path= '/competencies' component = {Competencies}/>
+            <Route path= '/attendance' component = {Attendance}/>
+            <Route path= '/journal' component = {Journal}/>
+            <Route path= '/performance' component = {Performance}/>
+
+
 
           </Switch>
           </HashRouter>

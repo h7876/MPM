@@ -6,24 +6,34 @@ import CardHeader from '@material-ui/core/CardHeader';
 // import classnames from 'classnames';
 // import Button from '@material-ui/core/Button';
 // import Grid from '@material-ui/core/Grid';
-import {Link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
 import ButtonBases from './Button';
+import Grid from '@material-ui/core/Grid'
 
 
 const styles = theme => ({
   card: {
     maxWidth: 400,
-    width: 400,
-    height: '100vh',
+    width: "100vw",
+    height: '500',
     alignItems: 'center',
     alignContent: 'center',
-    backgroundColor: '#2D2D2D',
-    paddingLeft: '40vw',
-    paddingRight: '40vw',
-    paddingTop: 40,
-    shadow: 10
+    backgroundColor: '#A5A5A5',
+    // paddingLeft: '25vw',
+    // paddingRight: '25vw',
+    // paddingTop: '25vh',
+    // paddingBottom: '25vh',
+    justifyContent: 'center',
+    // shadow: 10
 
   },
+  root: {
+    flexGrow: 1,
+    justify: 'space-around',
+    alignContent: 'space-around',
+    position: 'relative'
+    , direction: 'row'
+},
   media: {
     height: 100,
     paddingTop: '55.25%', // 16:9
@@ -38,7 +48,7 @@ const styles = theme => ({
     textAlign: 'center'
   },
   title: {
-    color: 'white',
+    color: 'black',
     fontFamily: 'Julius Sans One, sans-serif',
     justifyContent: 'center'
   }
@@ -51,7 +61,8 @@ class LoginCard extends Component {
 render(){
   const { classes } = this.props;
   return(
-    
+    <Grid container className='root' spacing={16} direction='row' >
+
     <div>
     {/* <Grid className = {classes.grid}> */}
     <Card className={classes.card} >
@@ -60,7 +71,7 @@ render(){
     </Card>
     {/* </Grid> */}
     </div>
-  
+    </Grid>
   )
 }
 }
