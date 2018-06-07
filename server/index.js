@@ -20,6 +20,7 @@ const {
 } = process.env
 
 const app = express();
+app.use( express.static( `${__dirname}/../build` ) );
 app.use(bodyParser.json()); 
 
 massive(CONNECTION_STRING).then((db)=> {
@@ -71,7 +72,7 @@ passport.deserializeUser((id, done)=> {
 
 app.get('/', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect: 'http://localhost:3000/#/dashboard'
+    successRedirect: process.env.SUCCESS_REDIRECT
     
 }))
 
@@ -104,6 +105,7 @@ app.post('/api/journal/', (req, res, next)=> {
         res.status(500).send(err)
     })
 })
+
 
 
 app.listen(SERVER_PORT, ()=> {

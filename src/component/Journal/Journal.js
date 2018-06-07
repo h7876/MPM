@@ -55,7 +55,7 @@ class Journal extends Component {
   }
 
   getEntries() {
-    axios.get("http://localhost:3000/api/journal/").then((req, res) => {
+    axios.get("/api/journal/").then((req, res) => {
       console.log(req.data[0], "I am the axios call");
       this.setState({ entries: req.data });
     //   var newState = _.map(this.state.entries.message);
