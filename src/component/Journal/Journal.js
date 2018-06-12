@@ -2,39 +2,52 @@ import React, { Component } from "react";
 import MenuAppBar from "../Dashboard/AppBar";
 import axios from "axios";
 import { connect } from "react-redux";
-import { getUser } from "../../ducks/users";
+import { getUser, selectEntry } from "../../ducks/users";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography"
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import GridLayout from "react-grid-layout";
+import Checkbox from "./Checkbox";
 var _ = require("lodash");
 
 const styles = {
   root: {
-    display:"flex",
+    display: "flex",
     flexGrow: 1,
     height: 200,
     justify: "space-around",
     alignContent: "space-around",
-    position: "relative",
-    direction: "row-wrap"
+    position: "absolute",
+    direction: "column",
+    paddingTop: 200
   },
   paper: {
     height: 200,
     width: 200,
     justify: "space-around",
-    alignItems: "space-around"
+    alignItems: "space-around",
+    paddingTop: 200
   },
   entries: {
-      height: 500,
-      width: 300,
-      justify: "space-around",
-      alignItems: "space-around"
+    zIndex: 40,
+    height: 500,
+    width: 300,
+    justify: "space-around",
+    alignItems: "space-around",
+    position: "absolute",
+    direction: "column",
+    paddingTop: 200
   }
 };
 
 class Journal extends Component {
+  componentWillMount = () => {
+    this.selectedCheckboxes = new Set();
+  };
+
   componentDidMount() {
     this.props.getUser();
     this.setUser();
@@ -45,38 +58,85 @@ class Journal extends Component {
     super();
     this.state = {
       entries: [],
-      user: ""
+      user: "",
+      emid: "",
+      entryID: [],
+      entryToDelete: [],
+      checkedA: true
     };
     this.setUser = this.setUser.bind(this);
     this.getEntries = this.getEntries.bind(this);
+    this.deleteEntries = this.deleteEntries.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.toggleCheckbox = this.toggleCheckbox.bind(this);
   }
   setUser() {
     this.setState({ user: this.props.user });
+    this.setState({ emid: this.props.user.emid });
   }
 
   getEntries() {
-    axios.get("/api/journal/").then((req, res) => {
+    axios.get("/api/journal/" + this.props.user.emid).then((req, res) => {
       console.log(req.data[0], "I am the axios call");
       this.setState({ entries: req.data });
-    //   var newState = _.map(this.state.entries.message);
-    //   this.setState({ entries: newState });
-    //   console.log(this.state.entries, "I am the entries data");
+      this.setState({ emid: this.props.user.emid });
     });
   }
 
-  render() {
-    const mappedEntries = this.state.entries.map((element, i) => {
-        return (
-            <Paper className = {styles.root}>
-            <Typography component="p">
-                {element.message}
-                </Typography>
-            </Paper>
-            
-        )
-    })
+  //checkboxLand
 
-    console.log(mappedEntries)
+  toggleCheckbox = label => {
+    if (this.selectedCheckboxes.has(label)) {
+      this.selectedCheckboxes.delete(label);
+    } else {
+      this.selectedCheckboxes.add(label);
+    }
+  };
+
+  createCheckboxes = () =>
+    this.state.entries.map((element, i) => {
+      this.createCheckbox(element.message);
+    });
+  //end of checkboxLand
+  deleteEntries() {
+    axios
+      .delete("/api/journal/" + this.props.entryToDelete)
+      .then((req, res) => {
+        alert("Entry Deleted!");
+        this.getEntries();
+      });
+  }
+
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.checked });
+    console.log(event.target);
+  };
+
+  // this.state.entries.map((element, i)=> {
+  //   return element.id
+  render() {
+    // const messageID = [];
+    const mappedEntries = this.state.entries.map((element, i) => {
+      return (
+        <Grid
+          container
+          className={styles.root}
+          spacing={16}
+          direction="column"
+          key={element + i}
+        >
+          <Grid item xs={12} position="center" justify="space-around" />
+          <Paper className={styles.entries}>
+            <Typography component="p">
+              {element.message}
+              <Checkbox label={element.id} />
+            </Typography>
+          </Paper>
+        </Grid>
+      );
+    });
+
+    console.log(mappedEntries);
     const { classes } = this.props;
     let { emid, emname, emphoto } = this.props.user;
     var entries = this.state.entries.map(entries => ({
@@ -86,27 +146,31 @@ class Journal extends Component {
     console.log(entries, "entries var");
     return (
       <div className="App">
-        <Grid container className={styles.root} spacing={16}direction="column">
+        <Grid container className={styles.root} spacing={16} direction="column">
           <MenuAppBar />
 
           {/* <p>{_.map(this.state.entries, "message", "id")}</p> */}
-          <Grid item xs={12} position="relative"justify = 'space-around' />
-            {mappedEntries}
+          <Grid item xs={12} position="center" justify="space-around" />
+          {mappedEntries}
+          <Button onClick={this.deleteEntries} width={20} height={10} justify="space-around">
+            {" "}
+            Delete{" "}
+          </Button>
+          <Button> Edit </Button>
+          
         </Grid>
-        
-
-        
       </div>
     );
   }
 }
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.user,
+    entryToDelete: state.entryToDelete
   };
 }
 
 export default connect(
   mapStateToProps,
-  { getUser }
+  { getUser, selectEntry }
 )(Journal);

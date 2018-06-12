@@ -85,17 +85,40 @@ app.get('/auth/me', function (req, res){
     }
 })
 
-app.get('/api/journal/', (req, res, next) => {
+app.get('/api/journal/:emid', (req, res) => {
+    const emid = req.params.emid;
+    console.log(req.params,'sup')
     const dbInstance = req.app.get('db');
-    dbInstance.findJournalEntries()
+    dbInstance.findJournalEntries([emid])
     .then(journal => {res.status(200).send(journal);
         console.log(journal);
    }).catch(err => {
     console.log(err);
     res.status(500).send(err)
 });
-}
-)
+})
+
+app.delete('/api/journal/:emid', (req, res)=> {
+    const emid = req.params.emid;
+    const dbInstance = req.app.get('db');
+    dbInstance.deleteJournalEntry([emid])
+    .then(journal=> {res.status(200).send('ok')}).catch(err=> {
+        console.log(err);
+        res.status(500).send(err)
+    })
+})
+
+app.put('/api/journal/:id', (req, res)=> {
+    const id = req.params.id;
+    const message = req.params.message
+    const dbInstance = req.app.get('db');
+    dbInstance.editEntry([message, id])
+    .then(journal=> {res.status(200).send('ok')}).catch(err=> {
+        console.log(err);
+        res.status(500).send(err)
+    })
+})
+
 app.post('/api/journal/', (req, res, next)=> {
     let{emid, message} = req.body;
     req.app.get('db').addJournalEntry([emid, message]).then(ok=>{
@@ -109,5 +132,5 @@ app.post('/api/journal/', (req, res, next)=> {
 
 
 app.listen(SERVER_PORT, ()=> {
-    console.log(`Yo bitch stuff is happening on: ${SERVER_PORT}`)
+    console.log(`Things are happening on port: ${SERVER_PORT}`)
 })
