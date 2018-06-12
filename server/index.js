@@ -110,7 +110,7 @@ app.delete('/api/journal/:emid', (req, res)=> {
 
 app.put('/api/journal/:id', (req, res)=> {
     const id = req.params.id;
-    const message = req.params.message
+    const {message} = req.body
     const dbInstance = req.app.get('db');
     dbInstance.editEntry([message, id])
     .then(journal=> {res.status(200).send('ok')}).catch(err=> {

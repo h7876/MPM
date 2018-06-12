@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import GridLayout from "react-grid-layout";
 import Checkbox from "./Checkbox";
+import JournalEditModal from './JournalEditModal';
 var _ = require("lodash");
 
 const styles = {
@@ -62,13 +63,17 @@ class Journal extends Component {
       emid: "",
       entryID: [],
       entryToDelete: [],
-      checkedA: true
+      checkedA: true,
+      editToggle: false,
+      newEntry: ''
     };
     this.setUser = this.setUser.bind(this);
     this.getEntries = this.getEntries.bind(this);
     this.deleteEntries = this.deleteEntries.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.toggleCheckbox = this.toggleCheckbox.bind(this);
+    this.editEntry = this.editEntry.bind(this);
+    this.editToggle = this.editToggle.bind(this);
   }
   setUser() {
     this.setState({ user: this.props.user });
@@ -107,10 +112,24 @@ class Journal extends Component {
       });
   }
 
+
+editEntry(){
+  axios.put("/api/journal/" + this.props.entryToDelete, {
+    emid: this.props.user.emid,
+    message: this.state.newEntry,
+  }).then((req, res)=> {
+    this.getEntries()
+  }).catch(alert('error'))
+}
+
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked });
     console.log(event.target);
   };
+
+  editToggle(){
+    this.setState({editToggle: !this.state.editToggle})
+  }
 
   // this.state.entries.map((element, i)=> {
   //   return element.id
@@ -156,8 +175,9 @@ class Journal extends Component {
             {" "}
             Delete{" "}
           </Button>
-          <Button> Edit </Button>
-          
+         
+          <JournalEditModal/>
+            
         </Grid>
       </div>
     );
