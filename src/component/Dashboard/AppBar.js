@@ -72,15 +72,29 @@ const styles = theme => ({
   title: {
     color: "white",
     fontFamily: "Julius Sans One, sans-serif",
-    justifyContent: "center",
+    justifyContent: "left",
     position: "fixed",
-    right: 300
+    left: 55
   },
   img: {
-    borderRadius: "50%"
+
+    position: "absolute",
+    justifyContent:"right",
+    right: 5,
+    top: 5
 },
   name: {
-    color: "white"
+    color: "white",
+    position: "absolute",
+    justifyContent: "right",
+    right: 65,
+    top: 25
+  },
+
+  dashboard: {
+    position: "relative",
+    right:30
+
   },
   toolbar: theme.mixins.toolbar
   
@@ -136,23 +150,20 @@ class MenuAppBar extends React.Component {
         </FormGroup>
         <AppBar className={classes.appBar} position="absolute">
           <Toolbar>
-            <IconButton
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="Menu"
-            />
+          
             <Typography
               variant="title"
               color="inherit"
-              className={classes.flex}
+              className={classes.title}
             >
               <Link to="/dashboard" style={{ color: "white" }}>
                 {" "}
                 Dashboard{" "}
               </Link>
             </Typography>
-            <Typography className="name" color="inherit">
+            <Typography className={classes.name} color="inherit">
               {emname}
+         
             </Typography>
             {auth && (
               <div>
@@ -161,6 +172,7 @@ class MenuAppBar extends React.Component {
                   aria-haspopup="true"
                   onClick={this.handleMenu}
                   color="inherit"
+                  className={classes.img}
                 >
                   {/* <AccountCircle > */}
                     <img className = 'img' src={this.props.user.emphoto} alt="profilephoto" height= '30px' width= '30px' borderRadius='50%'/>

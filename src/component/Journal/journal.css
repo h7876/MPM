@@ -9,29 +9,61 @@
     align-content: center;
     justify-content: center;
     padding-top: 80px;
-    padding-left: 240px;
+    margin-left: 240px;
 
 }
 
 .entry {
+    position: relative;
     margin: 10px;
     border-style: solid;
     border-width: 1px;
-    box-shadow: 10px, 5px, gray;
-    border-color: black;
-    width: 200px;
-    height: 100px;
+    -moz-box-shadow:0 0 8px 0 grey;
+    -webkit-box-shadow:0 0 8px 0 grey;
+    box-shadow:0 0 8px 0 grey;
+    border-color: white;
+    width: 300px;
+    height: 200px;
 
 }
 
-.edit {
-    position:absolute;
-    top:77px;
-    right: 90px;
+.editButton {
+    position: absolute;;
+    bottom: 0;
+    right: 0;
+    background-color: #2980a0;
+    border: none;
+    color: white;
+    padding: 8px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
 
-.delete {
-    position:absolute;
-    top:80px;
-    right: 10px;
+.deleteButton {
+    position: absolute;;
+    bottom: 0;
+    left: 0;
+    background-color: #d63b3b;
+    border: none;
+    color: white;
+    padding: 8px 18px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    
+}
+
+.titlebox {
+    position: relative;
+    width: 300px;
+    height: 30px;
+    background: black;
+    color: white;
+    text-decoration: underline;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
 }

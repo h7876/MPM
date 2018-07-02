@@ -121,18 +121,30 @@ editEntry(){
     const mappedEntries = this.state.entries.map((element, i) => {
       return (
         <div className="entry">
+        <div className="titlebox"> {element.emname}:</div>
             <Typography component="p">
-             {element.emname}:
-              <br/>
+  
               {element.message}
               <br/>
               ID :{element.id}
             </Typography>
+            {this.state.editToggle === true && element.id == this.state.entryToEdit ? 
+            <div>
             <input type="text" onChange={this.newEntryInput}/>
             <button onClick={this.editEntry}>Save</button> 
-           
-            <button onClick={this.editToggle} value={element.id}> Edit Entry </button>
-            <button onClick={this.deleteEntries} value={element.id}> Delete </button>
+              
+            <button className="editButton" onClick={this.editToggle} value={element.id}> Edit Entry </button>
+            <button className="deleteButton" onClick={this.deleteEntries} value={element.id}> Delete </button>
+            
+            </div>
+            :
+
+              <div>
+              <button className="editButton" onClick={this.editToggle} value={element.id}> Edit Entry </button>
+              <button className="deleteButton" onClick={this.deleteEntries} value={element.id}> Delete </button>
+              </div>
+            }
+      
         </div>
       );
     });
@@ -158,8 +170,8 @@ editEntry(){
           {mappedEntries}
         
           </div>
-        <div className="edit"><JournalEditModal entryToEdit={this.state.entryToDelete}/></div>
-        <div className="delete"><Button variant="contained" color="secondary" onClick={this.deleteEntries}> Delete </Button></div>
+        {/* <div className="edit"><JournalEditModal entryToEdit={this.state.entryToDelete}/></div>
+        <div className="delete"><Button variant="contained" color="secondary" onClick={this.deleteEntries}> Delete </Button></div> */}
       </div>
     );
   }
