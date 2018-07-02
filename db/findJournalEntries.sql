@@ -1,1 +1,1 @@
-select id, message from journal where emid = $1
+select a.id, message, b.emname from journal a left join  employee b on b.emid = a.emid  where b.emid = $1

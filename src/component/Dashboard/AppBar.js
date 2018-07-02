@@ -76,10 +76,14 @@ const styles = theme => ({
     position: "fixed",
     right: 300
   },
+  img: {
+    borderRadius: "50%"
+},
   name: {
     color: "white"
   },
   toolbar: theme.mixins.toolbar
+  
 });
 
 class MenuAppBar extends React.Component {
@@ -158,7 +162,9 @@ class MenuAppBar extends React.Component {
                   onClick={this.handleMenu}
                   color="inherit"
                 >
-                  <AccountCircle />
+                  {/* <AccountCircle > */}
+                    <img className = 'img' src={this.props.user.emphoto} alt="profilephoto" height= '30px' width= '30px' borderRadius='50%'/>
+                  {/* </AccountCircle> */}
                 </IconButton>
               </div>
             )}

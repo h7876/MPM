@@ -7,11 +7,13 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 import Paper from "@material-ui/core/Paper";
+import Card from '@material-ui/core/Card';
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import GridLayout from "react-grid-layout";
 import Checkbox from "./Checkbox";
 import JournalEditModal from './JournalEditModal';
+import journal from './journal.css';
 var _ = require("lodash");
 
 const styles = {
@@ -23,14 +25,16 @@ const styles = {
     alignContent: "space-around",
     position: "absolute",
     direction: "column",
-    paddingTop: 200
+    paddingTop: 200,
+    marginTop: 400
   },
   paper: {
-    height: 200,
-    width: 200,
+  
     justify: "space-around",
     alignItems: "space-around",
-    paddingTop: 200
+    marginTop: 400,
+    paddingTop: 400
+   
   },
   entries: {
     zIndex: 40,
@@ -40,6 +44,7 @@ const styles = {
     alignItems: "space-around",
     position: "absolute",
     direction: "column",
+    justifyContent: 'center',
     paddingTop: 200
   }
 };
@@ -55,6 +60,8 @@ class Journal extends Component {
     console.log(this.state.user);
     this.getEntries();
   }
+
+
   constructor() {
     super();
     this.state = {
@@ -63,9 +70,10 @@ class Journal extends Component {
       emid: "",
       entryID: [],
       entryToDelete: [],
-      checkedA: true,
+      checkedA: false,
       editToggle: false,
-      newEntry: ''
+      newEntry: '',
+      entryToEdit: ''
     };
     this.setUser = this.setUser.bind(this);
     this.getEntries = this.getEntries.bind(this);
@@ -74,15 +82,18 @@ class Journal extends Component {
     this.toggleCheckbox = this.toggleCheckbox.bind(this);
     this.editEntry = this.editEntry.bind(this);
     this.editToggle = this.editToggle.bind(this);
+    
+
   }
   setUser() {
     this.setState({ user: this.props.user });
     this.setState({ emid: this.props.user.emid });
   }
 
+
   getEntries() {
     axios.get("/api/journal/" + this.props.user.emid).then((req, res) => {
-      console.log(req.data[0], "I am the axios call");
+      console.log(req.data, "I am the axios call");
       this.setState({ entries: req.data });
       this.setState({ emid: this.props.user.emid });
     });
@@ -103,9 +114,9 @@ class Journal extends Component {
       this.createCheckbox(element.message);
     });
   //end of checkboxLand
-  deleteEntries() {
+  deleteEntries(e) {
     axios
-      .delete("/api/journal/" + this.props.entryToDelete)
+      .delete("/api/journal/" + e.target.value)
       .then((req, res) => {
         alert("Entry Deleted!");
         this.getEntries();
@@ -113,13 +124,11 @@ class Journal extends Component {
   }
 
 
-editEntry(){
-  axios.put("/api/journal/" + this.props.entryToDelete, {
+editEntry(e){
+  axios.put("/api/journal/" + e.target.value, {
     emid: this.props.user.emid,
     message: this.state.newEntry,
-  }).then((req, res)=> {
-    this.getEntries()
-  }).catch(alert('error'))
+  }).then(()=> this.getEntries()).catch(alert('error'))
 }
 
   handleChange = name => event => {
@@ -127,31 +136,30 @@ editEntry(){
     console.log(event.target);
   };
 
-  editToggle(){
+  editToggle(e){
+    this.setState({entryToEdit: e.target.value})
     this.setState({editToggle: !this.state.editToggle})
+    
   }
 
-  // this.state.entries.map((element, i)=> {
-  //   return element.id
   render() {
-    // const messageID = [];
+
     const mappedEntries = this.state.entries.map((element, i) => {
       return (
-        <Grid
-          container
-          className={styles.root}
-          spacing={16}
-          direction="column"
-          key={element + i}
-        >
-          <Grid item xs={12} position="center" justify="space-around" />
-          <Paper className={styles.entries}>
+        <div className="entry">
+        
+        <div>
+        
             <Typography component="p">
+            
+             {element.emname}:
+              <br/>
               {element.message}
-              <Checkbox label={element.id} />
             </Typography>
-          </Paper>
-        </Grid>
+            <button onClick={this.editToggle} value={element.id}> Edit Entry </button>
+            <button onClick={this.deleteEntries} value={element.id}> Delete </button>
+            </div>
+        </div>
       );
     });
 
@@ -165,20 +173,16 @@ editEntry(){
     console.log(entries, "entries var");
     return (
       <div className="App">
-        <Grid container className={styles.root} spacing={16} direction="column">
+    
           <MenuAppBar />
 
-          {/* <p>{_.map(this.state.entries, "message", "id")}</p> */}
-          <Grid item xs={12} position="center" justify="space-around" />
+        <div className="entries">
           {mappedEntries}
-          <Button onClick={this.deleteEntries} width={20} height={10} justify="space-around">
-            {" "}
-            Delete{" "}
-          </Button>
-         
-          <JournalEditModal/>
-            
-        </Grid>
+  
+          
+          </div>
+        <div className="edit"><JournalEditModal entryToDelete={this.state.entryToDelete}/></div>
+        <div className="delete"><Button variant="contained" color="secondary" onClick={this.deleteEntries}> Delete </Button></div>
       </div>
     );
   }

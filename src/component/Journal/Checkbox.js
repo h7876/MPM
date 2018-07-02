@@ -37,15 +37,13 @@ class Checkbox extends Component {
             checked={isChecked}
             onChange={this.toggleCheckboxChange}
           />
-
-          {label}
         </label>
       </div>
     );
   }
 }
 
-Checkbox.PropTypes = {
+Checkbox.Proptypes = {
   label: PropTypes.string.isRequired,
   handleCheckboxChange: PropTypes.func.isRequired
 };

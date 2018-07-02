@@ -60,7 +60,7 @@ export class Dashboard extends Component {
           <Grid container className="root" spacing={16} direction="row">
             <MenuAppBar />
           </Grid>
-          <Grid container className="chart" spacing={16} direction="row">
+          <Grid container className="chart" spacing={16} direction="column">
             <Grid item xs={12} position="relative" />
             <Grid item xs={12} position="relative">
               <Chart />

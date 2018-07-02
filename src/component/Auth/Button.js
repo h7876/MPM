@@ -8,12 +8,12 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    minWidth: 300,
+    minWidth: 50,
     width: '100%',
   },
   image: {
     position: 'relative',
-    height: 200,
+    height: 75,
     [theme.breakpoints.down('xs')]: {
       width: '100% !important', // Overrides inline-style
       height: 100,
@@ -79,9 +79,9 @@ const styles = theme => ({
 
 const images = [
   {
-    url: 'https://cdn.vox-cdn.com/uploads/chorus_asset/file/10675413/The_Verge_Seismic_Wallpaper_Portrait.0.png',
+    url: '',
     title: 'Login',
-    width: 400,
+    width: 200,
   }
  
 ];

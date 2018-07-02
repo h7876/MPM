@@ -64,7 +64,7 @@ class JournalInputBox extends React.Component {
 
 
         <TextField
-        onChange = {(e)=> this.props.addEntry(this.props.user.emname + ':  '+ e.target.value) +console.log(this.props)}
+        onChange = {(e)=> this.props.addEntry(e.target.value) +console.log(this.props)}
           id="textarea"
           label="Type here"
           placeholder="text"

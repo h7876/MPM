@@ -1,48 +1,83 @@
 import React, {Component} from 'react';
 import {Bar, Line, Pie} from 'react-chartjs-2';
+import axios from 'axios';
+import {connect} from 'react-redux';
+import {getUser} from '../../ducks/users';
 
-export default class Chart extends Component{
+ class Chart extends Component{
+     componentDidMount(){
+         console.log(this.props)
+         this.props.getUser()
+         this.getCiscoData()
+     }
     constructor(){
         super()
         this.state = {
+            ciscoData:{},
             chartData: {
-                labels: ['Boston', "Worcester", "Springfield", "Lowell", "Cambridge"," New Bedford" ],
+            
+                labels: ['Wrap Rate', "Availability", "Not Ready %", "NPS" ],
                 datasets:[{
-                    label: 'no.',
+                    label: 'Stats MTD',
                     data:[
-                        10,
-                        8,
-                        5,
-                        2,
-                        7,
-                        9,
-                        0,
-                        20
+                        96.5,
+                        85,
+                        12,
+                        83.4,
+                      
                     ],
                     backgroundColor: [
                         '#E37B40',
                         '#46B29D',
                         '#DE5B49',
                         '#324D5C',
-                        '#F0CA4D',
-                        'rgba(255,159,64,0.6)',
-                        'rgba(255,99,132,0.6)'
+                      
                     ]
                 }]
             }
         }
-
+        this.getCiscoData = this.getCiscoData.bind(this)
     }
+
+    getCiscoData(){
+        this.props.getUser().then(
+        axios.get('/api/cisco/' + this.props.user.emid,
+          ).then((response)=> {
+            // this.setState({ciscoData:response.data})
+            console.log(response.data)
+            console.log(this.props)
+        }))
+    }
+
     render(){
         return(
             <div className="chart">
             <Bar 
             data={this.state.chartData}
-            width={600}
+            width={500}
             height={300}
             
             options={{
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: 100,
+                            callback: function(value) {
+                                return value + "%"
+                            }
+                        },
+                        scaleLabel: {
+                            display: true,
+                            
+                        }
+                    }]
+                 },
                 maintainAspectRatio:false,
+                title: {
+                    display: true,
+                    text: 'Agent Metrics MTD'
+                },
                 layout: {
                     padding: {
                         top:50,
@@ -59,3 +94,11 @@ export default class Chart extends Component{
         )
     }
 }
+
+function mapStateToProps(state){
+    return {
+        user:state.user
+    }
+}
+
+export default connect(mapStateToProps, {getUser})(Chart)

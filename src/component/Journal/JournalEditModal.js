@@ -4,11 +4,11 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import JournalInputBox from '../Dashboard/JournalInputBox';
 import {connect} from 'react-redux';
 import {getUser, addEntry, selectEntry} from '../../ducks/users';
 import axios from 'axios';
+
 
 
 
@@ -42,18 +42,22 @@ class JournalEditModal extends React.Component {
     this.props.addEntry()
     this.props.selectEntry()
     this.getEntries();
+
   }
-  constructor(){
-    super()
+
+  constructor(props){
+    super(props)
   this.state = {
     open: false,
     show: true,
     entry: '',
     entries: [],
-    emid: ''
+    emid: '',
+    entryToDelete: ''
   };
   this.getEntries = this.getEntries.bind(this);
   this.handleClose = this.handleClose.bind(this);
+  this.setEntryToDelete = this.setEntryToDelete.bind(this);
   }
 
   getEntries() {
@@ -63,6 +67,9 @@ class JournalEditModal extends React.Component {
       this.setState({ emid: this.props.user.emid });
     });
   }
+setEntryToDelete(props){
+    this.setState({entryToDelete: props.entryToDelete})
+}
 
   handleOpen = () => {
     this.setState({ open: true });
@@ -74,7 +81,7 @@ class JournalEditModal extends React.Component {
     this.setState({ open: false });
     this.setState({show: true})
     console.log(this.state.open)
-    this.getEntries()
+
   };
 
 
@@ -83,7 +90,7 @@ class JournalEditModal extends React.Component {
             message: this.props.entry,
           }).then((req, res)=> {
             alert("Post edited!");
-          }).then(this.handleClose()).then(this.forceUpdate())
+          }).then(this.handleClose()).then(()=> {this.getEntries()})
     }
 
       
@@ -95,7 +102,7 @@ class JournalEditModal extends React.Component {
     return (
       <div>
         <Typography gutterBottom></Typography>
-        {this.state.show === true ? <Button onClick={this.handleOpen}>Edit Entry</Button>
+        {this.state.show === true ? <Button variant="contained" color="primary" onClick={this.handleOpen}>Edit Entry</Button>
         : <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"

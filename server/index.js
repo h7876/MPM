@@ -98,6 +98,19 @@ app.get('/api/journal/:emid', (req, res) => {
 });
 })
 
+app.get('/api/cisco/:emid', (req, res) => {
+    const emid = req.params.emid;
+    console.log(req.params,'sup')
+    const dbInstance = req.app.get('db');
+    dbInstance.getCiscoData([emid])
+    .then(cisco => {res.status(200).send(cisco);
+        console.log(cisco);
+   }).catch(err => {
+    console.log(err);
+    res.status(500).send(err)
+});
+})
+
 app.delete('/api/journal/:emid', (req, res)=> {
     const emid = req.params.emid;
     const dbInstance = req.app.get('db');

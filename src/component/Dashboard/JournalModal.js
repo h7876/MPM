@@ -66,8 +66,9 @@ class SimpleModal extends React.Component {
       axios.post('/api/journal/', {
         emid: this.props.user.emid,
         message: this.props.entry,
-      }).then(function (response){
-       console.log(response)
+      }).then(function (req, response){
+       console.log(req, response ,'axios PUT')
+    
       }).then(()=> { this.setState({ open: false });
       this.setState({show: true})}).catch(function (error){
         console.log(error);

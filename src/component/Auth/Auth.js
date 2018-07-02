@@ -7,7 +7,7 @@ import LoginCard from './LoginCard';
 
 export default function Login(){
     return(
-        <div className= "Login">
+        <div className= "journal">
             <div className= "Card">
             <a href={process.env.REACT_APP_LOGIN}>
           <LoginCard/>

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 // import Paper from '@material-ui/core/Paper';
 import {getUser} from '../../ducks/users';
 import {connect} from 'react-redux';
+import Chart from '../Dashboard/Chart';
 // import Dash from './Dash.css';
 // import SimpleModalWrapped from './JournalModal';
 
@@ -14,9 +15,9 @@ const styles = theme => ({
         flexGrow: 1,
         height: 200,
         justify: 'space-around',
-        alignContent: 'space-around',
-        position: 'relative'
-        , direction: 'row'
+        position: 'relative',
+         direction: 'column',
+        
     },
     paper: {
         height: 200,
@@ -47,15 +48,17 @@ export  class Competencies extends Component{
                 {/* { */}
                 {/* // emid ? */}
                 <div>
-            <Grid container className='root' spacing={16} direction='row' >
+            <Grid container className='root' spacing={16} direction='row' justifyContent = 'center'>
             <MenuAppBar />
-     
+            <Grid container className='root' spacing={16} direction='row' >
+            <Chart/>
+            </Grid>
             </Grid>
             
                </div>
             {/* //    :
                <p>Please login.</p> */}
-        {/* // */}// */}
+        {/* // */}
                 </div>
                  
         )
