@@ -38,10 +38,11 @@ const styles = theme => ({
 
 class JournalEditModal extends React.Component {
   componentDidMount(){
+    console.log(this.props + "modalpropsYO")
     this.props.getUser()
     this.props.addEntry()
-    this.props.selectEntry()
     this.getEntries();
+
 
   }
 
@@ -53,11 +54,11 @@ class JournalEditModal extends React.Component {
     entry: '',
     entries: [],
     emid: '',
-    entryToDelete: ''
+    entryToEdit: ''
   };
   this.getEntries = this.getEntries.bind(this);
   this.handleClose = this.handleClose.bind(this);
-  this.setEntryToDelete = this.setEntryToDelete.bind(this);
+
   }
 
   getEntries() {
@@ -67,9 +68,7 @@ class JournalEditModal extends React.Component {
       this.setState({ emid: this.props.user.emid });
     });
   }
-setEntryToDelete(props){
-    this.setState({entryToDelete: props.entryToDelete})
-}
+
 
   handleOpen = () => {
     this.setState({ open: true });
@@ -86,7 +85,7 @@ setEntryToDelete(props){
 
 
     handleSave = () => {
-        axios.put("/api/journal/" + this.props.entryToDelete, {
+        axios.put("/api/journal/" + this.props.entryToEdit, {
             message: this.props.entry,
           }).then((req, res)=> {
             alert("Post edited!");

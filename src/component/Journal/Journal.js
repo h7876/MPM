@@ -16,38 +16,7 @@ import JournalEditModal from './JournalEditModal';
 import journal from './journal.css';
 var _ = require("lodash");
 
-const styles = {
-  root: {
-    display: "flex",
-    flexGrow: 1,
-    height: 200,
-    justify: "space-around",
-    alignContent: "space-around",
-    position: "absolute",
-    direction: "column",
-    paddingTop: 200,
-    marginTop: 400
-  },
-  paper: {
-  
-    justify: "space-around",
-    alignItems: "space-around",
-    marginTop: 400,
-    paddingTop: 400
-   
-  },
-  entries: {
-    zIndex: 40,
-    height: 500,
-    width: 300,
-    justify: "space-around",
-    alignItems: "space-around",
-    position: "absolute",
-    direction: "column",
-    justifyContent: 'center',
-    paddingTop: 200
-  }
-};
+
 
 class Journal extends Component {
   componentWillMount = () => {
@@ -60,6 +29,7 @@ class Journal extends Component {
     console.log(this.state.user);
     this.getEntries();
   }
+
 
 
   constructor() {
@@ -82,6 +52,7 @@ class Journal extends Component {
     this.toggleCheckbox = this.toggleCheckbox.bind(this);
     this.editEntry = this.editEntry.bind(this);
     this.editToggle = this.editToggle.bind(this);
+    this.newEntryInput = this.newEntryInput.bind(this);
     
 
   }
@@ -117,18 +88,21 @@ class Journal extends Component {
   deleteEntries(e) {
     axios
       .delete("/api/journal/" + e.target.value)
-      .then((req, res) => {
+      .then(() => {
         alert("Entry Deleted!");
         this.getEntries();
       });
   }
 
+newEntryInput(e){
+  this.setState({newEntry:e.target.value})
+  console.log(this.state.newEntry)
+}
 
-editEntry(e){
-  axios.put("/api/journal/" + e.target.value, {
-    emid: this.props.user.emid,
+editEntry(){
+  axios.put("/api/journal/" + this.state.entryToEdit, {
     message: this.state.newEntry,
-  }).then(()=> this.getEntries()).catch(alert('error'))
+  }).then(alert('post edited!'))
 }
 
   handleChange = name => event => {
@@ -139,29 +113,32 @@ editEntry(e){
   editToggle(e){
     this.setState({entryToEdit: e.target.value})
     this.setState({editToggle: !this.state.editToggle})
+    console.log(this.state.entryToEdit)
     
   }
 
   render() {
-
     const mappedEntries = this.state.entries.map((element, i) => {
       return (
         <div className="entry">
-        
-        <div>
-        
             <Typography component="p">
-            
              {element.emname}:
               <br/>
               {element.message}
+              <br/>
+              ID :{element.id}
             </Typography>
+            <input type="text" onChange={this.newEntryInput}/>
+            <button onClick={this.editEntry}>Save</button> 
+           
             <button onClick={this.editToggle} value={element.id}> Edit Entry </button>
             <button onClick={this.deleteEntries} value={element.id}> Delete </button>
-            </div>
         </div>
       );
     });
+
+    
+  
 
     console.log(mappedEntries);
     const { classes } = this.props;
@@ -175,13 +152,13 @@ editEntry(e){
       <div className="App">
     
           <MenuAppBar />
-
+    
         <div className="entries">
+     
           {mappedEntries}
-  
-          
+        
           </div>
-        <div className="edit"><JournalEditModal entryToDelete={this.state.entryToDelete}/></div>
+        <div className="edit"><JournalEditModal entryToEdit={this.state.entryToDelete}/></div>
         <div className="delete"><Button variant="contained" color="secondary" onClick={this.deleteEntries}> Delete </Button></div>
       </div>
     );
