@@ -102,7 +102,7 @@ newEntryInput(e){
 editEntry(){
   axios.put("/api/journal/" + this.state.entryToEdit, {
     message: this.state.newEntry,
-  }).then(alert('post edited!'))
+  }).then(()=> {this.getEntries()}).then(alert('post edited!'))
 }
 
   handleChange = name => event => {
