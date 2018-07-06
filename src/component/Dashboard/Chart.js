@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Bar, Line, Pie} from 'react-chartjs-2';
+import {Bar} from 'react-chartjs-2';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {getUser} from '../../ducks/users';
@@ -44,8 +44,8 @@ import {getUser} from '../../ducks/users';
         axios.get('/api/cisco/' + this.props.user.emid,
           ).then((response)=> {
             // this.setState({ciscoData:response.data})
-            console.log(response.data)
-            console.log(this.props)
+            // console.log(response.data)
+            // console.log(this.props)
         }))
     }
 

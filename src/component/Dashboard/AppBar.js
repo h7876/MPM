@@ -8,13 +8,7 @@ import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-// import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from "@material-ui/icons/AccountCircle";
-// import Switch from '@material-ui/core/Switch';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from "@material-ui/core/FormGroup";
-// import MenuItem from '@material-ui/core/MenuItem';
-// import Menu from '@material-ui/core/Menu';
 import CompetenciesButton from "./CompetenciesButton";
 import AttendanceButton from "./AttendanceButton";
 import PerformanceButton from "./PerformanceButton";
@@ -22,8 +16,7 @@ import JournalButton from "./JournalButton";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getUser } from "../../ducks/users";
-import compose from "recompose/compose";
-import JournalInputBox from "./JournalInputBox";
+
 
 const drawerWidth = 240;
 
@@ -35,7 +28,7 @@ const styles = theme => ({
     overflow: "hidden",
     postion: "fixed",
     display: "flex"
-    // justify: 'space-around'
+  
   },
   flex: {
     flex: 2,
@@ -53,7 +46,7 @@ const styles = theme => ({
     backgroundColor: "black",
     zIndex: theme.zIndex.drawer + 1,
     position: "fixed"
-    // justifyContent: 'space-around'
+  
   },
   drawerPaper: {
     position: "fixed",
@@ -131,7 +124,6 @@ class MenuAppBar extends React.Component {
   };
 
   render() {
-    console.log(emname);
     const { classes } = this.props;
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
@@ -141,12 +133,7 @@ class MenuAppBar extends React.Component {
     return (
       <div className={classes.root}>
         <FormGroup>
-          {/* <FormControlLabel
-            control={
-              <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch" />
-            }
-            label={auth ? 'Logout' : 'Login'}
-          /> */}
+      
         </FormGroup>
         <AppBar className={classes.appBar} position="absolute">
           <Toolbar>
@@ -174,9 +161,9 @@ class MenuAppBar extends React.Component {
                   color="inherit"
                   className={classes.img}
                 >
-                  {/* <AccountCircle > */}
-                    <img className = 'img' src={this.props.user.emphoto} alt="profilephoto" height= '30px' width= '30px' borderRadius='50%'/>
-                  {/* </AccountCircle> */}
+                 
+                    <img className = 'img' src={this.props.user.emphoto} alt="profilephoto" height= '30px' width= '30px' borderradius='50%'/>
+              
                 </IconButton>
               </div>
             )}
@@ -220,7 +207,4 @@ export default connect(
   { getUser }
 )(withStyles(styles)(MenuAppBar));
 
-// // export const styling= withStyles(styles)(MenuAppBar);
-// // export default connect(mapStateToProps, {getUser})(MenuAppBar, (styling))
 
-// export default compose(withStyles(styles (JournalInputBox), connect(),)(AppBar));

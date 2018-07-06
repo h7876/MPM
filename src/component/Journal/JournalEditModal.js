@@ -7,10 +7,8 @@ import Button from '@material-ui/core/Button';
 import JournalInputBox from '../Dashboard/JournalInputBox';
 import {connect} from 'react-redux';
 import {getUser, addEntry, selectEntry} from '../../ducks/users';
+import './journal.css'
 import axios from 'axios';
-
-
-
 
 function getModalStyle() {
   const top = 50 ;
@@ -22,8 +20,6 @@ function getModalStyle() {
     transform: `translate(-${top}%, -${left}%)`,
   };
 }
-
-
 
 const styles = theme => ({
   paper: {
@@ -41,9 +37,6 @@ class JournalEditModal extends React.Component {
     console.log(this.props + "modalpropsYO")
     this.props.getUser()
     this.props.addEntry()
-    this.getEntries();
-
-
   }
 
   constructor(props){
@@ -51,24 +44,10 @@ class JournalEditModal extends React.Component {
   this.state = {
     open: false,
     show: true,
-    entry: '',
-    entries: [],
     emid: '',
-    entryToEdit: ''
   };
-  this.getEntries = this.getEntries.bind(this);
   this.handleClose = this.handleClose.bind(this);
-
   }
-
-  getEntries() {
-    axios.get("/api/journal/" + this.props.user.emid).then((req, res) => {
-      console.log(req.data[0], "I am the axios call");
-      this.setState({ entries: req.data });
-      this.setState({ emid: this.props.user.emid });
-    });
-  }
-
 
   handleOpen = () => {
     this.setState({ open: true });
@@ -80,28 +59,24 @@ class JournalEditModal extends React.Component {
     this.setState({ open: false });
     this.setState({show: true})
     console.log(this.state.open)
+    this.props.getEntriescb();
 
   };
-
 
     handleSave = () => {
         axios.put("/api/journal/" + this.props.entryToEdit, {
             message: this.props.entry,
-          }).then((req, res)=> {
-            alert("Post edited!");
-          }).then(this.handleClose()).then(()=> {this.getEntries()})
+          }).then(()=> {this.handleClose()})
     }
 
-      
-  
   render() {
     const { classes } = this.props;
-    console.log(this.props, "I'm on the modal page!")
-    console.log(this.props.user.emid)
+    // console.log(this.props, "I'm on the modal page!")
+    // console.log(this.props.user.emid)
     return (
       <div>
         <Typography gutterBottom></Typography>
-        {this.state.show === true ? <Button variant="contained" color="primary" onClick={this.handleOpen}>Edit Entry</Button>
+        {this.state.show === true ? <button className="editButton"onClick={this.handleOpen}>Edit Entry</button>
         : <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
@@ -115,13 +90,10 @@ class JournalEditModal extends React.Component {
             <JournalInputBox/>
             < Button onClick = {this.handleSave} > Save </Button>
             <Typography variant="subheading" id="simple-modal-description">
-            {/* Subtext */}
             </Typography>
-            {/* <SimpleModalWrapped /> */}
           </div>
         </Modal>}
-        
-        
+      
       </div>
     );
   }
@@ -139,7 +111,6 @@ function mapStateToProps(state){
   }
 }
 
+const EditModal = withStyles(styles)(JournalEditModal);
 
-const modal = withStyles(styles)(JournalEditModal);
-
-export default connect(mapStateToProps, {getUser, addEntry, selectEntry})(modal);
+export default connect(mapStateToProps, {getUser, addEntry, selectEntry})(EditModal);

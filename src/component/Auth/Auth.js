@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Auth.css';
+ import './Auth.css';
 
 import LoginCard from './LoginCard';
 
