@@ -1,0 +1,14 @@
+.table {
+
+    z-index: 1;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-align-content: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    padding-top: 80px;
+    margin-left: 260px;
+    margin-right: 120px;
+
+}
