@@ -6,6 +6,7 @@ import { getUser, selectEntry } from "../../ducks/users";
 import Typography from "@material-ui/core/Typography";
 import EditModal from './JournalEditModal';
 import './journal.css'
+import SimpleModalWrapped from "../Dashboard/JournalModal";
 
 
 class Journal extends Component {
@@ -72,7 +73,7 @@ class Journal extends Component {
 
 newEntryInput(e){
   this.setState({newEntry:e.target.value})
-  console.log(this.state.newEntry)
+  
 }
 
 editEntry(){
@@ -83,7 +84,7 @@ editEntry(){
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked });
-    console.log(event.target);
+   
   };
 
   editToggle(e){
@@ -135,6 +136,9 @@ editEntry(){
           <MenuAppBar />
         <div className="entries">
           {mappedEntries}
+          </div>
+          <div className="modal">
+          <SimpleModalWrapped getEntries={this.getEntries}/>
           </div>
       </div>
     );

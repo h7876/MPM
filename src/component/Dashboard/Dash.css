@@ -1,3 +1,41 @@
 Body {
     background-color:white;
 }
+
+
+.content {
+
+    z-index: 1;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-align-content: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    padding-top: 10px;
+    margin-left: 0px;
+
+}
+
+.chart {
+
+    z-index: 1;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-align-content: center;
+    align-content: center;
+    justify-content: center;
+    padding-top: 50px;
+    margin-left: 300px;
+    margin-right: 80px;
+}
+.modal {
+    position: absolute;
+    top: 65px;
+    right: 15px;
+}
+
+
+
+

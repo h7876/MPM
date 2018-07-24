@@ -33,7 +33,7 @@ class JournalInputBox extends React.Component {
 
   render() {
     // let {emid} = this.props.user
-    console.log(this.props)
+    // console.log(this.props)
     return (
       <form className='container' noValidate autoComplete="off">
 

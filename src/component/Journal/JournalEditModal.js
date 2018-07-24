@@ -52,13 +52,13 @@ class JournalEditModal extends React.Component {
   handleOpen = () => {
     this.setState({ open: true });
     this.setState({show: false})
-    console.log(this.state.open)
+    
   };
 
   handleClose = () => {
     this.setState({ open: false });
     this.setState({show: true})
-    console.log(this.state.open)
+    
     this.props.getEntriescb();
 
   };

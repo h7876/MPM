@@ -33,15 +33,19 @@ const styles = theme => ({
     padding: theme.spacing.unit * 4 ,
     justifyContent: 'center'
   },
+  button: {
+    margin: theme.spacing.unit,
+  }
 });
 
 class SimpleModal extends React.Component {
   componentDidMount(){
     this.props.getUser()
     this.props.addEntry()
+    console.log(this.props)
   }
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
   this.state = {
     open: false,
     show: true,
@@ -52,13 +56,13 @@ class SimpleModal extends React.Component {
   handleOpen = () => {
     this.setState({ open: true });
     this.setState({show: false})
-    console.log(this.state.open)
+    
   };
 
   handleClose = () => {
     this.setState({ open: false });
     this.setState({show: true})
-    console.log(this.state.open)
+   
   };
 
 
@@ -67,7 +71,7 @@ class SimpleModal extends React.Component {
         emid: this.props.user.emid,
         message: this.props.entry,
       }).then(function (req, response){
-       console.log(req, response ,'axios PUT')
+     
     
       }).then(()=> { this.setState({ open: false });
       this.setState({show: true})}).catch(function (error){
@@ -78,12 +82,11 @@ class SimpleModal extends React.Component {
   
   render() {
     const { classes } = this.props;
-    console.log(this.props, "I'm on the modal page!")
-    console.log(this.props.user.emid)
+  
     return (
       <div>
         <Typography gutterBottom></Typography>
-        {this.state.show === true ? <Button onClick={this.handleOpen}>New Journal Entry</Button>
+        {this.state.show === true ? <Button variant="raised" color="default" className={classes.button} onClick={this.handleOpen}>New Journal Entry</Button>
         : <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"

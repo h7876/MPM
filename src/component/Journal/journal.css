@@ -9,7 +9,8 @@
     align-content: center;
     justify-content: center;
     padding-top: 80px;
-    margin-left: 240px;
+    margin-left: 200px;
+    margin-right: 120px;
 
 }
 
@@ -29,8 +30,8 @@
 
 .editButton {
     position: absolute;;
-    bottom: 0;
-    right: 0;
+    bottom: 5px;
+    right: 5px;
     background-color: #2980a0;
     border: none;
     color: white;
@@ -39,12 +40,13 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    box-shadow: 2px 2.5px #5A5A5A;
 }
 
 .deleteButton {
     position: absolute;;
-    bottom: 0;
-    left: 0;
+    bottom: 5px;
+    left: 5px;
     background-color: #d63b3b;
     border: none;
     color: white;
@@ -53,6 +55,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    box-shadow: 2px 2.5px #5A5A5A;
     
 }
 
@@ -60,10 +63,11 @@
     position: relative;
     width: 300px;
     height: 30px;
-    background: black;
+    background: #2F2F2F;
     color: white;
-    text-decoration: underline;
+    /* text-decoration: underline; */
     justify-content: center;
     justify-items: center;
     text-align: center;
+
 }

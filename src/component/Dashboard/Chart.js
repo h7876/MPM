@@ -3,6 +3,7 @@ import {Bar} from 'react-chartjs-2';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {getUser} from '../../ducks/users';
+import  "./Dash.css";
 
  class Chart extends Component{
      componentDidMount(){
@@ -18,7 +19,28 @@ import {getUser} from '../../ducks/users';
             
                 labels: ['Wrap Rate', "Availability", "Not Ready %", "NPS" ],
                 datasets:[{
-                    label: 'Stats MTD',
+                    label: ['Stats MTD'],
+                    data:[
+                        96.5,
+                        85,
+                        12,
+                        83.4,
+                      
+                    ],
+                    backgroundColor: [
+                        '#E37B40',
+                        '#46B29D',
+                        '#DE5B49',
+                        '#324D5C',
+                      
+                    ]
+                }]
+            },
+            morechartdata: {
+                type:'radar',
+                labels: ['Wrap Rate', "Availability", "Not Ready %", "NPS" ],
+                datasets:[{
+                    label: ['Stats MTD'],
                     data:[
                         96.5,
                         85,
@@ -51,10 +73,10 @@ import {getUser} from '../../ducks/users';
 
     render(){
         return(
-            <div className="chart">
+            <div className="content">
             <Bar 
             data={this.state.chartData}
-            width={500}
+            width={1000}
             height={300}
             
             options={{
@@ -82,14 +104,15 @@ import {getUser} from '../../ducks/users';
                     padding: {
                         top:50,
                         left: 240,
-                        right:10,
-                        bottom:10
+                        // right:10,
+                        // bottom:10
                     },
-                    justifyContent: "space-around",
+                    // justifyContent: "space-around",
                     
                 }
             }}
             />
+              
             </div>
         )
     }

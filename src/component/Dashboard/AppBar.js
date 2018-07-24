@@ -127,8 +127,8 @@ class MenuAppBar extends React.Component {
     const { classes } = this.props;
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    console.log(this.props.user);
-    console.log(this.props.user, "user props");
+    // console.log(this.props.user);
+    // console.log(this.props.user, "user props");
     let { emname } = this.props.user;
     return (
       <div className={classes.root}>
