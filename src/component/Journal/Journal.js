@@ -115,7 +115,7 @@ editEntry(){
             :
 
               <div>
-                  <EditModal entryToEdit={element.id} getEntriescb={this.getEntriescb}/>
+                  <EditModal entryToEdit={element.id} getEntries={this.getEntries}/>
               <button className="deleteButton" onClick={this.deleteEntries} value={element.id}> Delete </button>
               </div>
             }

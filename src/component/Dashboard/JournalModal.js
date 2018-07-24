@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -8,6 +8,7 @@ import JournalInputBox from './JournalInputBox';
 import {connect} from 'react-redux';
 import {getUser, addEntry} from '../../ducks/users';
 import axios from 'axios';
+
 
 
 
@@ -38,7 +39,7 @@ const styles = theme => ({
   }
 });
 
-class SimpleModal extends React.Component {
+class SimpleModal extends Component {
   componentDidMount(){
     this.props.getUser()
     this.props.addEntry()
@@ -50,7 +51,9 @@ class SimpleModal extends React.Component {
     open: false,
     show: true,
     entry: ''
-  };
+  }
+  this.handleSave = this.handleSave.bind(this);
+  this.handleClose = this.handleClose.bind(this);
   }
 
   handleOpen = () => {
@@ -62,7 +65,7 @@ class SimpleModal extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
     this.setState({show: true})
-   
+    this.props.getEntries();
   };
 
 
@@ -70,13 +73,7 @@ class SimpleModal extends React.Component {
       axios.post('/api/journal/', {
         emid: this.props.user.emid,
         message: this.props.entry,
-      }).then(function (req, response){
-     
-    
-      }).then(()=> { this.setState({ open: false });
-      this.setState({show: true})}).catch(function (error){
-        console.log(error);
-      })
+      }).then(()=>{this.handleClose()})
     }
   
   

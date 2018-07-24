@@ -59,7 +59,7 @@ class JournalEditModal extends React.Component {
     this.setState({ open: false });
     this.setState({show: true})
     
-    this.props.getEntriescb();
+    this.props.getEntries();
 
   };
 
